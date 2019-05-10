@@ -91,9 +91,9 @@ if __name__ == '__main__':
 
     # plot
     fig, ax = plt.subplots(figsize=(15, 4))
-    sns.distplot(X[:SAMPLE], ax=ax, rug=True)
-    sns.distplot(X[SAMPLE:SAMPLE*2], ax=ax, rug=True)
-    sns.distplot(X[SAMPLE*2:], ax=ax, rug=True)
+
+    for i in range(num_components):
+        sns.distplot(X[i * SAMPLE:(i+1) * SAMPLE], ax=ax, rug=True)
 
     # Create Gaussian Mixture Model
     ugmm = UGMM(X, num_components)
@@ -105,10 +105,8 @@ if __name__ == '__main__':
     print(sorted(ugmm.m))
 
     fig, ax = plt.subplots(figsize=(15, 4))
-    sns.distplot(X[:SAMPLE], ax=ax, hist=True, norm_hist=True)
-    sns.distplot(np.random.normal(ugmm.m[0], 1, SAMPLE), color='k', hist=False, kde=True)
-    sns.distplot(X[SAMPLE:SAMPLE*2], ax=ax, hist=True, norm_hist=True)
-    sns.distplot(np.random.normal(ugmm.m[1], 1, SAMPLE), color='k', hist=False, kde=True)
-    sns.distplot(X[SAMPLE*2:], ax=ax, hist=True, norm_hist=True)
-    sns.distplot(np.random.normal(ugmm.m[2], 1, SAMPLE), color='k', hist=False, kde=True)
+    for i in range(num_components):
+        sns.distplot(X[i * SAMPLE:(i+1) * SAMPLE], ax=ax, hist=True, norm_hist=True)
+        sns.distplot(np.random.normal(ugmm.m[i], 1, SAMPLE), color='k', hist=False, kde=True)
+
     plt.show()
